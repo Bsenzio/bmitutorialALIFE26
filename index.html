@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BCI Workshop</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap"
+rel="stylesheet">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <a href="#home" class="nav-btn">Home</a>
+    <a href="#tutorial" class="nav-btn">Tutorial</a>
+    <a href="#speakers" class="nav-btn">Speakers</a>
+    <a href="#about" class="nav-btn">About</a>
+
+</nav>
+
+<header class="hero" id="home">
+
+    <h1>Brain Computer Interfaces Workshop</h1>
+
+    <h2>
+        From Neural Signals to Interactive Systems
+    </h2>
+
+</header>
+
+<section id="tutorial">
+
+    <h2 class="section-title">
+        Interactive Arcade Experience
+    </h2>
+
+    <div class="arcade-wrapper">
+
+        <div class="arcade-cabinet">
+
+            <div class="arcade-marquee">
+
+                INTERACTIVE EXPERIENCE
+
+            </div>
+
+            <div class="arcade-screen-frame">
+
+                <div id="game"></div>
+
+            </div>
+
+            <div class="arcade-controls">
+
+                <div class="game-cartridge-selector">
+
+                    <img
+                        src="assets/images/cartridges/tutorial1.png"
+                        class="game-cartridge"
+                        data-rom="assets/roms/tutorial1.nes">
+
+                    <img
+                        src="assets/images/cartridges/tutorial2.png"
+                        class="game-cartridge"
+                        data-rom="assets/roms/tutorial2.nes">
+
+                </div>
+
+                <span>
+                    More demos coming soon...
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="skill-carousel-section">
+
+    <h2 class="section-title">
+
+        Tutorial Highlights
+
+    </h2>
+
+    <div class="carousel-wrapper">
+
+        <button id="prevSkill" class="carousel-btn">
+
+            <i class="fas fa-chevron-left"></i>
+
+        </button>
+
+        <div class="carousel-3d">
+
+            <div class="skill-slide">
+                <img src="assets/images/slide1.jpg">
+            </div>
+
+            <div class="skill-slide">
+                <img src="assets/images/slide2.jpg">
+            </div>
+
+            <div class="skill-slide">
+                <img src="assets/images/slide3.jpg">
+            </div>
+
+            <div class="skill-slide">
+                <img src="assets/images/slide4.jpg">
+            </div>
+
+        </div>
+
+        <button id="nextSkill" class="carousel-btn">
+
+            <i class="fas fa-chevron-right"></i>
+
+        </button>
+
+    </div>
+
+</section>
+
+<section id="speakers">
+
+    <h2 class="section-title">
+
+        Featured Speakers
+
+    </h2>
+
+    <div class="speakers-grid">
+
+        <div class="speaker-card">
+
+            <img src="assets/images/speaker1.jpg">
+
+            <h3>Speaker Name</h3>
+
+            <p>BCI Research</p>
+
+        </div>
+
+        <div class="speaker-card">
+
+            <img src="assets/images/speaker2.jpg">
+
+            <h3>Speaker Name</h3>
+
+            <p>Artificial Intelligence</p>
+
+        </div>
+
+        <div class="speaker-card">
+
+            <img src="assets/images/speaker3.jpg">
+
+            <h3>Speaker Name</h3>
+
+            <p>XR Systems</p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section id="about">
+
+    <h2 class="section-title">
+
+        About The Tutorial
+
+    </h2>
+
+    <div class="about-box">
+
+        <p>
+
+            This workshop introduces
+            EEG acquisition,
+            signal processing,
+            machine learning,
+            XR integration,
+            embedded systems
+            and real-time neurotechnology.
+
+        </p>
+
+    </div>
+
+</section>
+
+<footer>
+
+    <p>
+
+        Brain Computer Interfaces Workshop
+
+    </p>
+
+    <p>
+
+        © 2026
+
+    </p>
+
+</footer>
+
+<script>
+
+const params =
+new URLSearchParams(window.location.search);
+
+window.EJS_player="#game";
+window.EJS_core="nes";
+window.EJS_pathtodata=
+"https://cdn.emulatorjs.org/stable/data/";
+
+window.EJS_startOnLoaded=true;
+
+window.EJS_gameUrl=
+params.get("rom") ||
+"assets/roms/tutorial1.nes";
+
+</script>
+
+<script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
+
+<script src="js/tech-background.js"></script>
+<script src="js/script.js"></script>
+
+</body>
+</html>
