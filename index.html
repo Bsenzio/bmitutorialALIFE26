@@ -228,21 +228,55 @@ rel="stylesheet">
 
 </footer>
 
+
 <script>
 
 const params =
-new URLSearchParams(window.location.search);
+    new URLSearchParams(window.location.search);
 
-window.EJS_player="#game";
-window.EJS_core="nes";
-window.EJS_pathtodata=
-"https://cdn.emulatorjs.org/stable/data/";
+window.EJS_player = "#game";
+window.EJS_core = "nes";
+window.EJS_pathtodata =
+    "https://cdn.emulatorjs.org/stable/data/";
 
-window.EJS_startOnLoaded=true;
+window.EJS_startOnLoaded = true;
 
-window.EJS_gameUrl=
-params.get("rom") ||
-"assets/roms/tutorial1.nes";
+window.EJS_gameUrl =
+    params.get("rom") ||
+    "assets/roms/wamg.nes";
+
+document.addEventListener("DOMContentLoaded", () =>
+{
+    document
+        .querySelectorAll(".game-cartridge")
+        .forEach(cartridge =>
+        {
+            cartridge.addEventListener("click", () =>
+            {
+                const rom =
+                    cartridge.dataset.rom;
+
+                window.location.href =
+                    "?rom=" +
+                    encodeURIComponent(rom);
+            });
+        });
+
+    document
+        .querySelectorAll(".game-cartridge")
+        .forEach(cartridge =>
+        {
+            if (
+                cartridge.dataset.rom ===
+                window.EJS_gameUrl
+            )
+            {
+                cartridge.classList.add(
+                    "selected-cartridge"
+                );
+            }
+        });
+});
 
 </script>
 
