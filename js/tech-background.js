@@ -58,29 +58,41 @@ for (let i = 0; i < 12; i++) {
     });
 }
 
-function drawEEG() {
+function drawEEG(){
 
-    ctx.strokeStyle = "rgba(0,255,255,0.25)";
-    ctx.lineWidth = 1;
-
-    eegLines.forEach(line => {
+    eegLines.forEach(line=>{
 
         ctx.beginPath();
 
-        for (let x = 0; x < canvas.width; x += 10) {
+        ctx.strokeStyle =
+        "rgba(0,255,255,0.35)";
 
-            const y =
-                line.y +
-                Math.sin(
-                    x * 0.02 +
-                    Date.now() * 0.003 +
-                    line.phase
-                ) * 15;
+        ctx.lineWidth = 2;
 
-            if (x === 0)
-                ctx.moveTo(x, y);
+        let y = line.y;
+
+        for(let x=0;x<canvas.width;x+=8){
+
+            let signal =
+            Math.sin(
+                x*0.015 +
+                Date.now()*0.002 +
+                line.phase
+            )*8;
+
+            if(Math.random()<0.02){
+
+                signal -= 35;
+                signal += 60;
+                signal -= 25;
+            }
+
+            const yy = y + signal;
+
+            if(x===0)
+                ctx.moveTo(x,yy);
             else
-                ctx.lineTo(x, y);
+                ctx.lineTo(x,yy);
         }
 
         ctx.stroke();
@@ -177,59 +189,66 @@ for (let i = 0; i < 5; i++) {
     });
 }
 
-function drawBrains() {
+function drawBrains(){
 
-    brains.forEach(b => {
+    brains.forEach(b=>{
+
+        b.x += 0.25;
+
+        if(b.x > canvas.width + 120){
+
+            b.x = -120;
+            b.y = Math.random()*canvas.height;
+        }
 
         const pulse =
-            Math.sin(Date.now() * 0.002 + b.phase) * 4;
+        Math.sin(
+            Date.now()*0.002+b.phase
+        )*3;
 
         ctx.strokeStyle =
-            "rgba(0,255,255,0.35)";
+        "rgba(255,0,255,0.45)";
 
         ctx.lineWidth = 2;
 
+        // hemisferios
+
         ctx.beginPath();
         ctx.arc(
-            b.x - b.size * 0.2,
+            b.x-18,
             b.y,
-            b.size * 0.5 + pulse,
+            25+pulse,
             0,
-            Math.PI * 2
+            Math.PI*2
         );
         ctx.stroke();
 
         ctx.beginPath();
         ctx.arc(
-            b.x + b.size * 0.2,
+            b.x+18,
             b.y,
-            b.size * 0.5 + pulse,
+            25+pulse,
             0,
-            Math.PI * 2
+            Math.PI*2
         );
         ctx.stroke();
 
-        for (let i = 0; i < 12; i++) {
+        // surcos
 
-            const x1 =
-                b.x - b.size * 0.4 +
-                Math.random() * b.size * 0.8;
-
-            const y1 =
-                b.y - b.size * 0.4 +
-                Math.random() * b.size * 0.8;
-
-            const x2 =
-                b.x - b.size * 0.4 +
-                Math.random() * b.size * 0.8;
-
-            const y2 =
-                b.y - b.size * 0.4 +
-                Math.random() * b.size * 0.8;
+        for(let i=-15;i<=15;i+=8){
 
             ctx.beginPath();
-            ctx.moveTo(x1, y1);
-            ctx.lineTo(x2, y2);
+
+            ctx.moveTo(
+                b.x-10,
+                b.y+i
+            );
+
+            ctx.lineTo(
+                b.x+10,
+                b.y+i
+            );
+
             ctx.stroke();
         }
     });
@@ -240,6 +259,7 @@ function drawBrains() {
 // =====================================================
 
 const synapses = [];
+const spikes = [];
 
 for (let i = 0; i < 45; i++) {
 
@@ -264,11 +284,23 @@ function drawSynapses() {
         if (s.y < 0) s.y = canvas.height;
         if (s.y > canvas.height) s.y = 0;
 
-        ctx.fillStyle = "rgba(255,0,255,0.85)";
+        ctx.fillStyle = "rgba(255,255,0,0.9)";
 
         ctx.beginPath();
-        ctx.arc(s.x, s.y, 2, 0, Math.PI * 2);
+        ctx.arc(s.x,s.y,3,0,Math.PI*2);
         ctx.fill();
+		
+		if(Math.random()<0.002){
+
+			spikes.push({
+
+				x:s.x,
+				y:s.y,
+				radius:2,
+				life:1
+			});
+		}		
+		
     });
 
     for (let i = 0; i < synapses.length; i++) {
@@ -308,106 +340,42 @@ function drawSynapses() {
     }
 }
 
-// =====================================================
-// AR MARKERS
-// =====================================================
 
-const arMarkers = [];
+function drawSpikes(){
 
-for (let i = 0; i < 10; i++) {
+    for(let i=spikes.length-1;i>=0;i--){
 
-    arMarkers.push({
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-        size: 20 + Math.random() * 50,
-        phase: Math.random() * 10
-    });
-}
+        const sp = spikes[i];
 
-function drawAR() {
+        sp.radius += 1.5;
 
-    arMarkers.forEach(m => {
-
-        const pulse =
-            Math.sin(Date.now() * 0.002 + m.phase) * 5;
+        sp.life -= 0.02;
 
         ctx.strokeStyle =
-            "rgba(0,255,255,0.25)";
+        `rgba(255,255,0,${sp.life})`;
 
-        ctx.beginPath();
-
-        ctx.rect(
-            m.x - m.size / 2,
-            m.y - m.size / 2,
-            m.size + pulse,
-            m.size + pulse
-        );
-
-        ctx.stroke();
+        ctx.lineWidth = 2;
 
         ctx.beginPath();
 
         ctx.arc(
-            m.x,
-            m.y,
-            m.size / 2 + pulse,
+            sp.x,
+            sp.y,
+            sp.radius,
             0,
-            Math.PI * 2
+            Math.PI*2
         );
 
         ctx.stroke();
-    });
+
+        if(sp.life<=0){
+
+            spikes.splice(i,1);
+        }
+    }
 }
 
-// =====================================================
-// XR OBJECTS
-// =====================================================
 
-const xrObjects = [];
-
-for (let i = 0; i < 8; i++) {
-
-    xrObjects.push({
-        angle: Math.random() * Math.PI * 2,
-        radius: 20 + Math.random() * 40,
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight
-    });
-}
-
-function drawXR() {
-
-    xrObjects.forEach(o => {
-
-        o.angle += 0.01;
-
-        const ox =
-            o.x +
-            Math.cos(o.angle) * o.radius;
-
-        const oy =
-            o.y +
-            Math.sin(o.angle) * o.radius;
-
-        ctx.strokeStyle =
-            "rgba(255,0,255,0.3)";
-
-        ctx.beginPath();
-        ctx.arc(
-            ox,
-            oy,
-            6,
-            0,
-            Math.PI * 2
-        );
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.moveTo(o.x, o.y);
-        ctx.lineTo(ox, oy);
-        ctx.stroke();
-    });
-}
 
 // =====================================================
 // SCANNER
@@ -430,31 +398,166 @@ function drawScanner() {
     ctx.stroke();
 }
 
+const pixels=[];
+
+for(let i=0;i<40;i++){
+
+    pixels.push({
+
+        x:Math.random()*window.innerWidth,
+        y:Math.random()*window.innerHeight,
+
+        speed:1+Math.random()*2,
+
+        size:4+Math.random()*6
+    });
+}
+
+function drawRetroPixels(){
+
+    pixels.forEach(p=>{
+
+        p.y += p.speed;
+
+        if(p.y > canvas.height){
+
+            p.y = -20;
+            p.x = Math.random()*canvas.width;
+        }
+
+        ctx.fillStyle =
+        "rgba(255,255,255,0.25)";
+
+        ctx.fillRect(
+            p.x,
+            p.y,
+            p.size,
+            p.size
+        );
+    });
+}
+
+
+const gameIcons = [];
+
+const symbols = [
+    "▲",
+    "■",
+    "◆",
+    "●",
+    "✦"
+];
+
+for(let i=0;i<20;i++){
+
+    gameIcons.push({
+
+        x:Math.random()*window.innerWidth,
+        y:Math.random()*window.innerHeight,
+
+        speed:0.3+Math.random()*0.5,
+
+        symbol:
+        symbols[
+            Math.floor(
+                Math.random()*symbols.length
+            )
+        ]
+    });
+}
+
+function drawGameIcons(){
+
+    ctx.font =
+    "18px 'Orbitron', sans-serif";
+
+    gameIcons.forEach(g=>{
+
+        g.y += g.speed;
+
+        if(g.y > canvas.height){
+
+            g.y = -20;
+            g.x =
+            Math.random()*canvas.width;
+        }
+
+        ctx.fillStyle =
+        "rgba(255,255,255,0.25)";
+
+        ctx.fillText(
+            g.symbol,
+            g.x,
+            g.y
+        );
+    });
+}
+
+function drawHeroBrain(){
+
+    const x = canvas.width/2;
+    const y = 220;
+
+    ctx.strokeStyle =
+    "rgba(0,255,255,0.03)";
+
+    ctx.lineWidth = 6;
+
+    ctx.beginPath();
+    ctx.arc(x-90,y,130,0,Math.PI*2);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(x+90,y,130,0,Math.PI*2);
+    ctx.stroke();
+
+    for(let i=-90;i<=90;i+=20){
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            x-40,
+            y+i
+        );
+
+        ctx.lineTo(
+            x+40,
+            y+i
+        );
+
+        ctx.stroke();
+    }
+}
+
+
 // =====================================================
 // ANIMATION LOOP
 // =====================================================
+function animateBackground(){
 
-function animateBackground() {
+    ctx.fillStyle =
+    "rgba(5,11,22,0.15)";
 
-    ctx.clearRect(
+    ctx.fillRect(
         0,
         0,
         canvas.width,
         canvas.height
     );
 
+    drawHeroBrain();
     drawCircuits();
     drawEEG();
     drawNetwork();
     drawBrains();
     drawSynapses();
-    drawAR();
-    drawXR();
+    drawSpikes();
+    drawGameIcons();
+    drawRetroPixels();
     drawScanner();
 
     requestAnimationFrame(
         animateBackground
     );
 }
-
 animateBackground();
