@@ -408,10 +408,32 @@ footer,
 }
 
 .speaker-card{
+
     text-align:center;
-    padding:20px;
-    background:rgba(255,255,255,.05);
+
+    padding:25px;
+
+    background:
+    rgba(5,11,22,.85);
+
+    border:
+    1px solid rgba(0,255,255,.15);
+
     border-radius:20px;
+
+    transition:.3s;
+
+    box-shadow:
+    0 0 20px rgba(0,255,255,.08);
+}
+
+.speaker-card:hover{
+
+    transform:
+    translateY(-8px);
+
+    box-shadow:
+    0 0 30px rgba(0,255,255,.25);
 }
 
 .speaker-card img{
@@ -935,3 +957,24 @@ footer::before{
 <p class="footer-subtitle">
     RETRO GAMES • REAL BRAINS • ARTIFICIAL LIFE
 </p>
+
+#speakers{
+
+    position:relative;
+
+    margin-top:140px;
+
+    padding:80px 40px;
+
+    background:
+    rgba(0,0,0,.35);
+
+    backdrop-filter:
+    blur(8px);
+
+    border-top:
+    1px solid rgba(0,255,255,.08);
+
+    border-bottom:
+    1px solid rgba(0,255,255,.08);
+}
