@@ -359,19 +359,32 @@ box-shadow:
 
     letter-spacing:4px;
 
-    border-radius:
-        30px 30px 0 0;
+    border-radius:30px 30px 0 0;
 
     background:
     linear-gradient(
         90deg,
         #ff0080,
-        #00ffff
+        #00ffff,
+        #ff0080
     );
 
+    background-size:300% 300%;
+
+    color:white;
+
     text-shadow:
-        0 0 10px white,
-        0 0 20px white;
+        0 0 10px #fff,
+        0 0 20px #00ffff,
+        0 0 35px #ff00ff;
+
+    box-shadow:
+        0 0 20px rgba(0,255,255,.35),
+        inset 0 0 20px rgba(255,255,255,.08);
+
+    animation:
+        marqueeGlow 4s linear infinite,
+        marqueePulse 2s ease-in-out infinite;
 }
 
 @keyframes marqueeGlow{
@@ -382,6 +395,32 @@ box-shadow:
 
     100%{
         background-position:100% 50%;
+    }
+}
+
+@keyframes marqueePulse{
+
+    0%,100%{
+
+        text-shadow:
+            0 0 10px #fff,
+            0 0 20px #00ffff,
+            0 0 35px #ff00ff;
+
+        box-shadow:
+            0 0 20px rgba(0,255,255,.35);
+    }
+
+    50%{
+
+        text-shadow:
+            0 0 15px #fff,
+            0 0 30px #00ffff,
+            0 0 50px #ff00ff;
+
+        box-shadow:
+            0 0 35px rgba(0,255,255,.55),
+            0 0 60px rgba(255,0,255,.25);
     }
 }
 
