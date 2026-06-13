@@ -20,6 +20,12 @@ rel="stylesheet">
 
 <body>
 
+<img
+    src="assets/bg-images/bci-left-wall.png"
+    class="left-background-art"
+    alt=""
+>
+
 <nav class="navbar">
 
     <a href="#tutorial" class="nav-btn">Tutorial</a>
@@ -36,7 +42,21 @@ rel="stylesheet">
         From Neural Signals to AL Interactive Systems
     </h2>
 
+	<img
+		src="assets/bg-images/bciretro.png"
+		class="floating-bci"
+		alt="BCI Retro"
+	>
+
+
 </header>
+
+
+<img
+    src="assets/bg-images/bci-right-wall.png"
+    class="right-background-art"
+    alt=""
+>
 
 <section id="tutorial">
 
@@ -50,7 +70,7 @@ rel="stylesheet">
 
             <div class="arcade-marquee">
 
-                INTERACTIVE EXPERIENCE
+                INTUITIVE RETRO ARCADE GAMING
 
             </div>
 
@@ -67,7 +87,7 @@ rel="stylesheet">
                     <img
                         src="assets/images/cartridges/alife2026prep.png"
                         class="game-cartridge"
-                        data-rom="assets/roms/wamv.nes">
+                        data-rom="assets/roms/alife26prep.nes">
 
                     <img
                         src="assets/images/cartridges/wamv.png"
@@ -81,10 +101,9 @@ rel="stylesheet">
 
                 </div>
 
-                <span>
-                    Pick a game to play b4 de tutorial...
-                </span>
-
+					<span class="arcade-message">
+						SELECT A CARTRIDGE BEFORE THE TUTORIAL
+					</span>
             </div>
 
         </div>
@@ -332,7 +351,7 @@ window.EJS_startOnLoaded = true;
 
 window.EJS_gameUrl =
     params.get("rom") ||
-    "assets/roms/wamv.nes";
+    "assets/roms/alife26prep.nes";
 
 document.addEventListener("DOMContentLoaded", () =>
 {
