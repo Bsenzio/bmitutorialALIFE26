@@ -226,6 +226,39 @@ footer,
     font-size:1.2rem;
 }
 
+.hero-images{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:30px;
+    margin-top:30px;
+    flex-wrap:wrap;
+}
+
+.hero-images img{
+    width:220px;
+    animation:floatRetro 4s ease-in-out infinite;
+}
+
+.hero-images img:nth-child(2){
+    animation-delay:0.8s;
+}
+
+.hero-images img:nth-child(3){
+    animation-delay:1.6s;
+}
+
+@keyframes floatRetro{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-12px);
+    }
+}
+
 /* ==========================================
    TITLES
 ========================================== */
