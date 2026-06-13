@@ -27,10 +27,41 @@ rel="stylesheet">
 >
 
 <nav class="navbar">
+		<div class="retro-player">
 
-    <a href="#tutorial" class="nav-btn">Tutorial</a>
-    <a href="#speakers" class="nav-btn">Speakers</a>
-    <a href="#about" class="nav-btn">About</a>
+			<div class="player-display">
+
+				<span id="trackName">
+					BCI RETRO THEME
+				</span>
+
+			</div>
+
+			<div class="player-controls">
+
+				<button id="prevTrack" class="player-btn">
+					◀◀
+				</button>
+
+				<button id="playTrack" class="player-btn">
+					▶
+				</button>
+
+				<button id="stopTrack" class="player-btn">
+					■
+				</button>
+
+				<button id="nextTrack" class="player-btn">
+					▶▶
+				</button>
+
+			</div>
+
+		</div>
+
+		<a href="#tutorial" class="nav-btn">Tutorial</a>
+		<a href="#speakers" class="nav-btn">Organizers</a>
+		<a href="#about" class="nav-btn">About</a>
 
 </nav>
 
@@ -354,44 +385,237 @@ rel="stylesheet">
 
 </footer>
 
-<audio id="bgm" loop autoplay>
-    <source src="assets/audio/bgm/bcialretrobgm.mp3" type="audio/mpeg">
+<audio id="bgm"></audio>
+
+<audio id="sfxClick" preload="auto">
+    <source
+        src="assets/audio/sfx/sfxclick.mp3"
+        type="audio/mpeg">
 </audio>
+
+<audio id="sfxHover" preload="auto">
+    <source
+        src="assets/audio/sfx/sfxhover.mp3"
+        type="audio/mpeg">
+</audio>
+
 
 <script>
 
-const bgm = document.getElementById("bgm");
+const bgm =
+    document.getElementById("bgm");
+
+const tracks = [
+
+    {
+        name:"BCI Retro Theme",
+        file:"assets/audio/bgm/track01.mp3"
+    },
+
+    {
+        name:"Neural Dreams",
+        file:"assets/audio/bgm/track02.mp3"
+    },
+
+    {
+        name:"Artificial Life",
+        file:"assets/audio/bgm/track03.mp3"
+    },
+
+    {
+        name:"Brainwave Runner",
+        file:"assets/audio/bgm/track04.mp3"
+    },
+
+    {
+        name:"Digital Ecology",
+        file:"assets/audio/bgm/track05.mp3"
+    }
+
+];
+
+let currentTrack = 0;
 
 bgm.volume = 0.05;
 
-let started = false;
+function loadTrack(index){
 
-function startBGM(){
+    currentTrack = index;
 
-    if(started) return;
+    bgm.src =
+        tracks[currentTrack].file;
 
-    bgm.play()
-    .then(() => {
-
-        started = true;
-
-    })
-    .catch(() => {
-
-        // El navegador bloqueó autoplay
-        // Esperar interacción del usuario
-
-    });
-
+    document.getElementById(
+        "trackName"
+    ).textContent =
+        tracks[currentTrack].name;
 }
 
-// Intentar autoplay cuando cargue la página
-window.addEventListener("load", startBGM);
+loadTrack(0);
 
-// Intentar nuevamente en la primera interacción
-document.addEventListener("click", startBGM);
-document.addEventListener("keydown", startBGM);
-document.addEventListener("touchstart", startBGM);
+document
+.getElementById("playTrack")
+.addEventListener("click", () => {
+
+    bgm.play();
+
+});
+
+document
+.getElementById("stopTrack")
+.addEventListener("click", () => {
+
+    bgm.pause();
+    bgm.currentTime = 0;
+
+});
+
+document
+.getElementById("nextTrack")
+.addEventListener("click", () => {
+
+    currentTrack =
+        (currentTrack + 1)
+        % tracks.length;
+
+    loadTrack(currentTrack);
+
+    bgm.play();
+
+});
+
+document
+.getElementById("prevTrack")
+.addEventListener("click", () => {
+
+    currentTrack =
+        (currentTrack - 1 + tracks.length)
+        % tracks.length;
+
+    loadTrack(currentTrack);
+
+    bgm.play();
+
+});
+
+bgm.addEventListener("ended", () => {
+
+    currentTrack =
+        (currentTrack + 1)
+        % tracks.length;
+
+    loadTrack(currentTrack);
+
+    bgm.play();
+
+});
+
+</script>
+
+<script>
+
+const sfxClick =
+    document.getElementById("sfxClick");
+
+const sfxHover =
+    document.getElementById("sfxHover");
+
+sfxClick.volume = 0.35;
+sfxHover.volume = 0.15;
+
+function playClick(){
+
+    sfxClick.currentTime = 0;
+    sfxClick.play();
+}
+
+function playHover(){
+
+    sfxHover.currentTime = 0;
+    sfxHover.play();
+}
+
+</script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* Flechas del carrusel */
+
+    document
+        .querySelectorAll(".carousel-btn")
+        .forEach(btn => {
+
+            btn.addEventListener("click", () => {
+
+                sfxClick.currentTime = 0;
+                sfxClick.play();
+
+            });
+
+        });
+
+    /* Speakers */
+
+    document
+        .querySelectorAll(".speaker-card")
+        .forEach(card => {
+
+            card.addEventListener("mouseenter", () => {
+
+                sfxHover.currentTime = 0;
+                sfxHover.play();
+
+            });
+
+        });
+
+    /* Cartuchos */
+
+    document
+        .querySelectorAll(".game-cartridge")
+        .forEach(cart => {
+
+            cart.addEventListener("mouseenter", () => {
+
+                sfxHover.currentTime = 0;
+                sfxHover.play();
+
+            });
+
+            cart.addEventListener("click", () => {
+
+                sfxClick.currentTime = 0;
+                sfxClick.play();
+
+            });
+
+        });
+
+    /* Botones del menú */
+
+    document
+        .querySelectorAll(".nav-btn")
+        .forEach(btn => {
+
+            btn.addEventListener("mouseenter", () => {
+
+                sfxHover.currentTime = 0;
+                sfxHover.play();
+
+            });
+
+            btn.addEventListener("click", () => {
+
+                sfxClick.currentTime = 0;
+                sfxClick.play();
+
+            });
+
+        });
+
+});
 
 </script>
 <script>
