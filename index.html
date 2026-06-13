@@ -29,13 +29,18 @@ rel="stylesheet">
 <nav class="navbar">
 		<div class="retro-player">
 
-			<div class="player-display">
+		<div class="player-display">
 
-				<span id="trackName">
-					BCI RETRO THEME
-				</span>
+			<div class="track-scroll">
+
+				<span class="track-text" id="trackText1"></span>
+				<span class="track-text" id="trackText2"></span>
+				<span class="track-text" id="trackText3"></span>
+				<span class="track-text" id="trackText4"></span>
 
 			</div>
+
+		</div>
 
 			<div class="player-controls">
 
@@ -405,6 +410,21 @@ rel="stylesheet">
 const bgm =
     document.getElementById("bgm");
 
+const trackScroll =
+    document.querySelector(".track-scroll");
+
+bgm.addEventListener("play", () => {
+
+    trackScroll.classList.add("playing");
+
+});
+
+bgm.addEventListener("pause", () => {
+
+    trackScroll.classList.remove("playing");
+
+});
+
 const tracks = [
 
     {
@@ -423,7 +443,7 @@ const tracks = [
     },
 
     {
-        name:"Brainwave Runner",
+        name:"B-wave Runner",
         file:"assets/audio/bgm/track04.mp3"
     },
 
@@ -442,13 +462,17 @@ function loadTrack(index){
 
     currentTrack = index;
 
-    bgm.src =
-        tracks[currentTrack].file;
+    bgm.src = tracks[currentTrack].file;
 
-    document.getElementById(
-        "trackName"
-    ).textContent =
-        tracks[currentTrack].name;
+    const title =
+        " ★ " +
+        tracks[currentTrack].name +
+        " ★ ";
+
+    document.getElementById("trackText1").textContent = title;
+    document.getElementById("trackText2").textContent = title;
+    document.getElementById("trackText3").textContent = title;
+    document.getElementById("trackText4").textContent = title;
 }
 
 loadTrack(0);
@@ -458,6 +482,7 @@ document
 .addEventListener("click", () => {
 
     bgm.play();
+	trackScroll.classList.add("playing");
 
 });
 
@@ -467,6 +492,21 @@ document
 
     bgm.pause();
     bgm.currentTime = 0;
+	trackScroll.classList.remove("playing");
+	
+	bgm.addEventListener("pause", () => {
+
+		trackScroll.classList.remove("playing");
+
+	});
+
+	bgm.addEventListener("play", () => {
+
+		trackScroll.classList.add("playing");
+
+	});
+
+
 
 });
 

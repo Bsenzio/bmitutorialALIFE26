@@ -1555,32 +1555,59 @@ footer::before{
 }
 
 .player-display{
-
-    min-width:220px;
-
-    height:42px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    overflow:hidden;
-
-    padding:0 15px;
-
-    border-radius:8px;
-
     background:#08120d;
-
-    border:
-    2px solid #00ff88;
-
+    border:2px solid #00ff99;
+    border-radius:6px;
+    padding:8px 10px;
+	position:relative;
     box-shadow:
-        inset 0 0 15px rgba(0,255,120,.35),
-        0 0 10px rgba(0,255,120,.15);
+        inset 0 0 10px rgba(0,255,153,.3),
+        0 0 10px rgba(0,255,153,.4);
+	width:230px;
+    overflow:hidden;
+}
 
+
+.track-scroll{
+    display:flex;
+    width:max-content;
+    gap:40px;
+    will-change:transform;
+}
+
+.track-text{
+    white-space:nowrap;
+    flex-shrink:0;
+}
+
+.track-scroll.playing{
+    animation: marquee 12s linear infinite;
+}
+
+@keyframes marquee{
+
+    from{
+        transform:translate3d(0,0,0);
+    }
+
+    to{
+        transform:translate3d(-25%,0,0);
+    }
+
+}
+
+.player-display::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0px,
+            transparent 2px,
+            rgba(0,0,0,.15) 3px
+        );
+    pointer-events:none;
 }
 
 #trackName{
@@ -1638,9 +1665,6 @@ footer::before{
 
 }
 
-.player-display{
-    position:relative;
-}
 
 .player-controls{
 
@@ -1649,3 +1673,55 @@ footer::before{
     gap:8px;
 
 }
+
+.track-scroll{
+    display:flex;
+    width:max-content;
+    gap:60px;
+}
+
+.track-text{
+    flex-shrink:0;
+    white-space:nowrap;
+
+    font-family:'Orbitron', sans-serif;
+    font-size:0.85rem;
+    font-weight:700;
+    letter-spacing:2px;
+    text-transform:uppercase;
+
+    color:#00ff99;
+
+    text-shadow:
+        0 0 5px #00ff99,
+        0 0 10px #00ff99,
+        0 0 20px #00ff99;
+}
+
+.track-scroll.playing{
+    animation: marquee 10s linear infinite;
+}
+
+@keyframes marquee{
+
+    from{
+        transform:translateX(0);
+    }
+
+    to{
+        transform:translateX(calc(-50% - 30px));
+    }
+
+}
+
+@keyframes retroScroll{
+
+    0%{
+        transform:translateX(100%);
+    }
+
+    100%{
+        transform:translateX(-100%);
+    }
+}
+
