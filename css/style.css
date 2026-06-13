@@ -805,3 +805,133 @@ footer{
         opacity:.45;
     }
 }
+
+footer{
+
+    position:relative;
+
+    margin-top:120px;
+
+    padding:50px 20px;
+
+    text-align:center;
+
+    background:
+    rgba(5,11,22,0.92);
+
+    border-top:
+    2px solid rgba(0,255,255,.25);
+
+    backdrop-filter:
+    blur(10px);
+
+    overflow:hidden;
+}
+
+footer::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:2px;
+
+    background:linear-gradient(
+        90deg,
+        transparent,
+        #00ffff,
+        #ff00ff,
+        #00ffff,
+        transparent
+    );
+
+    box-shadow:
+        0 0 12px #00ffff,
+        0 0 25px #ff00ff;
+}
+
+.footer-title{
+
+    font-family:'Orbitron',sans-serif;
+
+    font-size:1.4rem;
+
+    font-weight:700;
+
+    letter-spacing:3px;
+
+    text-transform:uppercase;
+
+    color:#00ffff;
+
+    text-shadow:
+        0 0 10px rgba(0,255,255,.7);
+
+    margin-bottom:12px;
+}
+
+.footer-subtitle{
+
+    color:#d7f9ff;
+
+    opacity:.8;
+
+    letter-spacing:2px;
+
+    margin-bottom:20px;
+}
+
+.footer-copy{
+
+    color:#8aa6b8;
+
+    font-size:.9rem;
+
+    letter-spacing:1px;
+}
+.footer-icons i:hover{
+
+    transform:
+    translateY(-5px)
+    scale(1.2);
+
+    color:#ff00ff;
+
+    text-shadow:
+        0 0 15px #ff00ff;
+}
+
+.footer-credit{
+
+    font-size:.85rem;
+
+    letter-spacing:2px;
+
+    color:rgba(255,255,255,.6);
+
+    text-transform:uppercase;
+}
+.footer-title{
+
+    animation:
+    footerBlink 3s infinite;
+}
+
+@keyframes footerBlink{
+
+    0%,100%{
+        opacity:1;
+    }
+
+    50%{
+        opacity:.8;
+    }
+}
+
+<p class="footer-subtitle">
+    RETRO GAMES • REAL BRAINS • ARTIFICIAL LIFE
+</p>
