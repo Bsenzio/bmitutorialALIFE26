@@ -273,25 +273,80 @@ footer,
 
 .arcade-cabinet{
 
-    width:min(1200px,95vw);
+width:min(1200px,95vw);
 
-    margin:0 auto;
+margin:0 auto;
 
-    border-radius:35px;
+border-radius:35px;
 
-    overflow:hidden;
+overflow:hidden;
 
-    border:3px solid rgba(0,255,255,.25);
+position:relative;
 
-    box-shadow:
-        0 0 30px rgba(0,255,255,.15),
-        0 0 60px rgba(255,0,255,.08);
+border:3px solid rgba(0,255,255,.25);
 
-    background:
-        rgba(5,11,22,.85);
+background:
+linear-gradient(
+    180deg,
+    rgba(15,20,35,.95),
+    rgba(5,10,20,.98)
+);
 
-    backdrop-filter:blur(10px);
+box-shadow:
+    0 0 20px rgba(0,255,255,.25),
+    0 0 50px rgba(0,255,255,.15),
+    0 0 100px rgba(255,0,255,.10),
+    0 25px 60px rgba(0,0,0,.7);
+
+backdrop-filter:blur(10px);
+
 }
+
+.arcade-cabinet::before{
+
+content:"";
+
+position:absolute;
+
+inset:-20px;
+
+border-radius:50px;
+
+background:
+radial-gradient(
+    circle,
+    rgba(0,255,255,.15),
+    transparent 70%
+);
+
+z-index:-1;
+
+filter:blur(25px);
+
+}
+
+.arcade-cabinet::after{
+
+content:"";
+
+position:absolute;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+pointer-events:none;
+
+border-radius:35px;
+
+box-shadow:
+    inset 0 0 40px rgba(255,255,255,.04),
+    inset 0 0 80px rgba(0,255,255,.08);
+
+}
+
 .arcade-marquee{
 
     text-align:center;
@@ -339,7 +394,7 @@ footer,
 
     width:100%;
 
-    min-height:850px;
+    min-height:550px;
 
     border-radius:20px;
 
@@ -505,15 +560,42 @@ footer{
 }
 
 .arcade-wrapper{
-    width:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+
+width:100%;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+padding:30px 20px 60px;
+
+position:relative;
+
 }
 
-.arcade-cabinet{
-    width:min(900px,70vw);
-    margin:0 auto;
+.arcade-wrapper::after{
+
+content:"";
+
+position:absolute;
+
+bottom:10px;
+
+width:70%;
+
+height:60px;
+
+border-radius:50%;
+
+background:
+rgba(0,255,255,.15);
+
+filter:blur(35px);
+
+z-index:-1;
+
 }
 
 .arcade-screen-frame{
@@ -559,10 +641,7 @@ footer{
     );
 }
 
-#game{
-    width:100%;
-    margin:0 auto;
-}
+
 
 /* ==========================================
    SECTION SPACING
