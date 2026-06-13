@@ -65,26 +65,20 @@ footer,
 ========================================== */
 
 .navbar{
-
     display:flex;
-
     align-items:center;
+}
 
-    justify-content:center;
+.nav-links{
+    display:flex;
+    gap:12px;
+    margin-left:30px;
+}
 
-    gap:20px;
-
-    padding:20px;
-
-    background:rgba(0,0,0,.7);
-
-    backdrop-filter:blur(10px);
-
-    position:relative;
-
-    top:0;
-
-    z-index:1000;
+.nav-status{
+    margin-left:auto;
+    color:#00ff88;
+    font-family:'Orbitron',sans-serif;
 }
 
 .nav-btn{
@@ -176,6 +170,13 @@ footer,
     transition:.4s;
 }
 
+.blink{
+    animation:blink 1s infinite;
+}
+
+@keyframes blink{
+    50%{opacity:0;}
+}
 .nav-btn:hover::after{
 
     left:100%;
@@ -1373,35 +1374,11 @@ footer::before{
 }
 
 .retro-player{
-
     display:flex;
-
     align-items:center;
-
     gap:15px;
 
-    padding:8px 15px;
-
-    border-radius:12px;
-
-    background:
-    linear-gradient(
-        180deg,
-        rgba(15,20,35,.95),
-        rgba(5,10,20,.95)
-    );
-
-    border:
-    2px solid rgba(0,255,255,.25);
-
-    box-shadow:
-        0 0 10px rgba(0,255,255,.15),
-        inset 0 0 10px rgba(0,255,255,.08);
-	
-	position: absolute;
-	
-	left: 20px;
-
+    margin-right:auto;
 }
 .player-btn{
 
