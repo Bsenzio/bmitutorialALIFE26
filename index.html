@@ -59,7 +59,18 @@ rel="stylesheet">
 				<button id="nextTrack" class="player-btn">
 					▶▶
 				</button>
+				
+				<button id="volDown" class="player-btn">
+					▼
+				</button>
 
+				<button id="volUp" class="player-btn">
+					▲
+				</button>
+				
+				<div id="volumeDisplay" class="volume-display">
+					VOL 5
+				</div>			
 			</div>
 
 		</div>
@@ -571,6 +582,51 @@ document
     bgm.play();
 
 });
+
+document
+.getElementById("volUp")
+.addEventListener("click", () => {
+
+    if(volumeLevel < 10){
+
+        volumeLevel++;
+
+        bgm.volume =
+            volumeLevel / 10;
+
+        updateVolumeDisplay();
+    }
+
+});
+
+document
+.getElementById("volDown")
+.addEventListener("click", () => {
+
+    if(volumeLevel > 0){
+
+        volumeLevel--;
+
+        bgm.volume =
+            volumeLevel / 10;
+
+        updateVolumeDisplay();
+    }
+
+});
+
+let volumeLevel = 5;
+
+const volumeDisplay =
+    document.getElementById("volumeDisplay");
+
+function updateVolumeDisplay(){
+
+    volumeDisplay.textContent =
+        "VOL " + volumeLevel;
+}
+
+
 
 bgm.addEventListener("ended", () => {
 
