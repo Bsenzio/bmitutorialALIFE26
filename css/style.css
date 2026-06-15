@@ -1943,3 +1943,23 @@ footer::before{
 
     }
 }
+
+.retro-footer{
+    position: relative;
+}
+
+.footer-side-image{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 140px; /* ajusta */
+    width: auto;
+}
+
+.footer-left{
+    left: 20px;
+}
+
+.footer-right{
+    right: 20px;
+}
