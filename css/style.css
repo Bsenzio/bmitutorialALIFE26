@@ -1981,3 +1981,57 @@ footer::before{
     color: inherit;
     text-decoration: none;
 }
+
+.resource-links{
+
+    width:100%;
+    display:flex;
+    justify-content:center;
+    margin:45px 0 60px;
+
+}
+
+.resource-grid{
+
+    width:min(900px,92%);
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:25px;
+
+}
+
+.resource-card{
+
+    display:block;
+    border:4px solid #30f2ff;
+    border-radius:16px;
+    overflow:hidden;
+    background:#08131d;
+    transition:.25s;
+    box-shadow:0 0 20px rgba(48,242,255,.25);
+
+}
+
+.resource-card:hover{
+
+    transform:translateY(-6px) scale(1.02);
+    box-shadow:0 0 35px rgba(48,242,255,.6);
+
+}
+
+.resource-card img{
+
+    width:100%;
+    display:block;
+
+}
+
+@media(max-width:700px){
+
+    .resource-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
