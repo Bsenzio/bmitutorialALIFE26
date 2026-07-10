@@ -1,0 +1,156 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    background:#050b16;
+
+    color:white;
+
+    font-family:'DM Sans',sans-serif;
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:30px;
+
+    overflow-x:hidden;
+
+    background-image:
+        radial-gradient(circle at top,#0f2748 0%,transparent 45%),
+        radial-gradient(circle at bottom,#111d3d 0%,transparent 40%);
+}
+
+.container{
+
+    max-width:520px;
+
+    text-align:center;
+}
+
+h1{
+
+    font-family:'Orbitron',sans-serif;
+
+    font-size:2.2rem;
+
+    text-transform:uppercase;
+
+    letter-spacing:3px;
+
+    margin-bottom:18px;
+
+    background:linear-gradient(
+        90deg,
+        #00ffff,
+        #ff00ff,
+        #00ffff
+    );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+
+    text-shadow:
+        0 0 12px rgba(0,255,255,.35);
+}
+
+h2{
+
+    font-family:'Orbitron',sans-serif;
+
+    color:#00ffff;
+
+    font-size:1rem;
+
+    letter-spacing:2px;
+
+    margin-bottom:35px;
+}
+
+.hero-image{
+
+    width:260px;
+
+    max-width:90%;
+
+    margin-bottom:35px;
+
+    filter:
+        drop-shadow(0 0 25px rgba(0,255,255,.35));
+
+    animation:floatImage 4s ease-in-out infinite;
+}
+
+@keyframes floatImage{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-12px);
+    }
+
+}
+
+.message-box{
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(15,20,35,.95),
+            rgba(5,10,20,.98)
+        );
+
+    border:2px solid rgba(0,255,255,.25);
+
+    border-radius:22px;
+
+    padding:28px;
+
+    box-shadow:
+        0 0 25px rgba(0,255,255,.18);
+}
+
+.message-box h3{
+
+    font-family:'Orbitron',sans-serif;
+
+    color:#00ffff;
+
+    text-transform:uppercase;
+
+    letter-spacing:2px;
+
+    margin-bottom:20px;
+
+    text-shadow:
+        0 0 10px #00ffff;
+}
+
+.message-box p{
+
+    line-height:1.8;
+
+    color:#d7f9ff;
+
+    margin-bottom:16px;
+
+    font-size:1rem;
+}
+
+.message-box strong{
+
+    color:#ffffff;
+
+    text-shadow:
+        0 0 10px rgba(0,255,255,.5);
+}
