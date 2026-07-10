@@ -2066,3 +2066,186 @@ footer::before{
     width:200px;
     height:auto;
 }
+
+
+.side-large{
+
+    width:170px;
+
+    height:360px;
+
+    object-fit:cover;
+
+    box-shadow:
+        0 0 20px rgba(0,255,255,.45);
+
+}
+
+.side-large{
+
+    filter:
+        drop-shadow(0 0 15px rgba(0,0,0,.8))
+        drop-shadow(0 0 25px rgba(0,0,0,.6));
+
+}
+
+
+.side-small-column{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+}
+
+.side-small{
+
+    width:100px;
+
+    height:100px;
+    object-fit:cover;
+
+    transition:.25s;
+
+    box-shadow:
+        0 0 18px rgba(0,255,255,.35);
+
+}
+
+.side-small-column a:hover img{
+
+    transform:
+        scale(1.05)
+        translateX(6px);
+
+    box-shadow:
+        0 0 30px rgba(0,255,255,.7),
+        0 0 45px rgba(255,0,255,.35);
+
+}
+
+.left-side-container{
+
+    position:fixed;
+
+    left:18px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:320px;
+
+    padding:18px;
+
+    border-radius:22px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(12,20,35,.92),
+            rgba(5,10,20,.94)
+        );
+
+    border:2px solid rgba(0,255,255,.25);
+
+    backdrop-filter:blur(10px);
+
+    box-shadow:
+        0 0 25px rgba(0,255,255,.20),
+        inset 0 0 18px rgba(0,255,255,.08);
+
+    z-index:999;
+
+}
+
+.side-title{
+
+    margin-bottom:15px;
+
+    text-align:center;
+
+    font-family:'Orbitron',sans-serif;
+
+    color:#00ffff;
+
+    text-transform:uppercase;
+
+    font-size:0.95rem;
+
+    letter-spacing:2px;
+
+    text-shadow:
+        0 0 8px #00ffff,
+        0 0 18px rgba(0,255,255,.5);
+
+}
+
+.side-title span{
+
+    display:block;
+
+    margin-top:4px;
+
+    font-size:.75rem;
+
+    color:#ffffff;
+
+    letter-spacing:1px;
+
+}
+
+.left-side-panel{
+
+    display:flex;
+
+    gap:12px;
+
+}
+
+.left-side-container::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:15px;
+
+    right:15px;
+
+    top:0;
+
+    height:2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #00ffff,
+            #ff00ff,
+            #00ffff,
+            transparent
+        );
+
+    box-shadow:
+        0 0 12px #00ffff;
+
+}
+
+.side-large{
+
+    filter:
+        drop-shadow(0 0 20px rgba(0,255,255,.45))
+        drop-shadow(0 0 8px rgba(0,0,0,.9));
+
+}
+
+.side-small{
+
+    filter:
+        drop-shadow(0 0 20px rgba(0,255,255,.45))
+        drop-shadow(0 0 8px rgba(0,0,0,.9));
+
+}
