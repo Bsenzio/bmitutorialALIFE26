@@ -2249,3 +2249,26 @@ footer::before{
         drop-shadow(0 0 8px rgba(0,0,0,.9));
 
 }
+
+.retro-footer{
+    position:relative;
+    overflow:visible;
+}
+
+/* Niños del lado izquierdo */
+.footer-kids{
+    position:absolute;
+    left:40px;
+    bottom:0;
+
+    width:240px;
+    height:auto;
+
+    pointer-events:none;
+
+    z-index:20;
+
+    filter:
+        drop-shadow(0 0 18px rgba(0,255,255,.35))
+        drop-shadow(0 0 25px rgba(0,0,0,.7));
+}
