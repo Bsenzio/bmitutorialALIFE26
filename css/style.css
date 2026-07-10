@@ -1956,13 +1956,6 @@ footer::before{
     width: auto;
 }
 
-.footer-left{
-    left: 20px;
-}
-
-.footer-right{
-    right: 20px;
-}
 
 .speaker-card:hover{
     transform: translateY(-5px);
@@ -2034,4 +2027,42 @@ footer::before{
 
     }
 
+}
+
+.footer-images-right{
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 15px;
+    z-index: 10;
+}
+
+.footer-images-right img{
+    width: 200px;
+    height: auto;
+    display: block;
+}
+
+.retro-footer{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    position:relative;
+}
+
+.footer-logos{
+    position:absolute;
+    right:40px;
+    bottom:30px;
+
+    display:flex;
+    gap:20px;
+    align-items:center;
+}
+
+.footer-logos img{
+    width:200px;
+    height:auto;
 }
