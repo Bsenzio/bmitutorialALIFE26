@@ -2062,9 +2062,17 @@ footer::before{
     align-items:center;
 }
 
+/* Mantener Cognisee igual */
 .footer-logos img{
     width:200px;
     height:auto;
+}
+
+/* Solo Cross Compass más pequeño */
+.footer-logos .crosscompass-logo{
+    width:120px;      /* prueba entre 100 y 140 px */
+    height:auto;
+    align-self:center; /* lo centra verticalmente */
 }
 
 
