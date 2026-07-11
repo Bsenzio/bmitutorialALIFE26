@@ -478,9 +478,25 @@ body{
 }
 
 .footer-logos img{
+    width:150px;
+}
 
-    width:120px;
+.footer-logos .cross-logo{
+    width:75px;
+	height:50px;
+}
 
+.footer-logos a{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.cross-logo{
+    width:75px;
+    max-width:75px;
+    height:auto;
+    object-fit:contain;
 }
 
 .footer-kids{
