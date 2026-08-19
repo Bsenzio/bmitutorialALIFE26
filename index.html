@@ -34,6 +34,88 @@ rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 
+<script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const romSelector =
+        document.getElementById("romSelector");
+
+    const loadRomButton =
+        document.getElementById("loadRomButton");
+
+
+    /* ==========================================
+       Detect current ROM
+       ========================================== */
+
+    const currentParams =
+        new URLSearchParams(window.location.search);
+
+    const currentRom =
+        currentParams.get("rom");
+
+    if (currentRom) {
+        romSelector.value = currentRom;
+    }
+
+
+    /* ==========================================
+       Load selected ROM
+       ========================================== */
+
+    function loadSelectedRom() {
+
+        const selectedRom =
+            romSelector.value;
+
+        if (!selectedRom) {
+            return;
+        }
+
+        /* Optional retro click sound */
+
+        if (typeof sfxClick !== "undefined") {
+            sfxClick.currentTime = 0;
+            sfxClick.play();
+        }
+
+
+        /* Keep the same mechanism
+           already used by the cartridges */
+
+        window.location.href =
+            "?rom=" +
+            encodeURIComponent(selectedRom);
+    }
+
+
+    /* Button */
+
+    loadRomButton.addEventListener(
+        "click",
+        loadSelectedRom
+    );
+
+
+    /* Optional:
+       double click / Enter behavior */
+
+    romSelector.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (event.key === "Enter") {
+                loadSelectedRom();
+            }
+
+        }
+    );
+
+});
+</script>
+
+
 <body>
 
 <img
@@ -111,6 +193,13 @@ rel="stylesheet">
     <h2>
         From Neural Signals to AL Interactive Systems
     </h2>
+	<h2>
+        -
+    </h2>
+    <h2>
+         August 19th,2026 from 10:00-12:00 at 1C18ArtsBldg
+    </h2>	
+	
 
     <div class="hero-images">
 
@@ -242,6 +331,76 @@ rel="stylesheet">
 		</div>
 
     </div>
+
+</div>
+
+<!-- RIGHT SIDE FIXED MATERIALS -->
+<div class="right-side-container">
+
+    <h3 class="side-title">
+        Interactive Materials
+        <span>(ALIFE26)</span>
+    </h3>
+
+    <div class="right-side-panel">
+
+        <!-- Presentation -->
+        <a href="assets/alife2026/ALIFE26_Hands_on_Tutorial_on_Brain_Computer_Interfaces.pdf"
+           target="_blank">
+            <img
+                src="assets/images/presentation_sphere.png"
+                class="right-side-image"
+                alt="Presentation">
+        </a>
+
+        <!-- Materials -->
+        <a href="#" target="_blank">
+            <img
+                src="assets/images/material_sphere_chiba.png"
+                class="right-side-image"
+                alt="Materials">
+        </a>
+
+
+        <!-- ============================= -->
+        <!-- NES ROM SELECTOR -->
+        <!-- ============================= -->
+
+        <div class="rom-selector-box">
+
+            <div class="rom-selector-title">
+                SELECT NES ROM
+            </div>
+
+            <select id="romSelector" class="rom-selector">
+
+                <option value="">
+                    -- CHOOSE GAME --
+                </option>
+
+                <option value="assets/roms/alifeprep.nes">
+                    ALIFE PREP
+                </option>
+
+                <option value="assets/roms/wamv.nes">
+                    WAMV
+                </option>
+
+                <option value="assets/roms/okadv.nes">
+                    OK ADVENTURE
+                </option>
+
+            </select>
+
+            <button id="loadRomButton" class="load-rom-button">
+                LOAD GAME
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
 
 </div>
 
@@ -382,7 +541,7 @@ rel="stylesheet">
 
 				<li>Machine learning pipelines</li>
 
-				<li>Real-time BCI interaction</li>
+				<li>Real-time HMI interaction</li>
 
 			</ul>
 
@@ -432,9 +591,9 @@ rel="stylesheet">
 
 				<li>Live demonstrations</li>
 
-				<li>EEG hardware experiments</li>
+				<li>EEG proxy hardware experiments</li>
 
-				<li>Interactive BCI systems</li>
+				<li>Interactive HCI systems</li>
 
 				<li>Open-source software tools</li>
 
