@@ -34,87 +34,6 @@ rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-    const romSelector =
-        document.getElementById("romSelector");
-
-    const loadRomButton =
-        document.getElementById("loadRomButton");
-
-
-    /* ==========================================
-       Detect current ROM
-       ========================================== */
-
-    const currentParams =
-        new URLSearchParams(window.location.search);
-
-    const currentRom =
-        currentParams.get("rom");
-
-    if (currentRom) {
-        romSelector.value = currentRom;
-    }
-
-
-    /* ==========================================
-       Load selected ROM
-       ========================================== */
-
-    function loadSelectedRom() {
-
-        const selectedRom =
-            romSelector.value;
-
-        if (!selectedRom) {
-            return;
-        }
-
-        /* Optional retro click sound */
-
-        if (typeof sfxClick !== "undefined") {
-            sfxClick.currentTime = 0;
-            sfxClick.play();
-        }
-
-
-        /* Keep the same mechanism
-           already used by the cartridges */
-
-        window.location.href =
-            "?rom=" +
-            encodeURIComponent(selectedRom);
-    }
-
-
-    /* Button */
-
-    loadRomButton.addEventListener(
-        "click",
-        loadSelectedRom
-    );
-
-
-    /* Optional:
-       double click / Enter behavior */
-
-    romSelector.addEventListener(
-        "keydown",
-        (event) => {
-
-            if (event.key === "Enter") {
-                loadSelectedRom();
-            }
-
-        }
-    );
-
-});
-</script>
-
-
 <body>
 
 <img
@@ -972,70 +891,371 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 </script>
+<!-- ========================================================= -->
+<!-- NES / EMULATORJS CONFIGURATION                            -->
+<!-- ========================================================= -->
+
 <script>
+(function () {
 
-const params =
-    new URLSearchParams(window.location.search);
+    /* =========================================================
+       1. READ ROM FROM URL
+       ========================================================= */
 
-window.EJS_player = "#game";
-window.EJS_core = "nes";
-window.EJS_pathtodata =
-    "https://cdn.emulatorjs.org/stable/data/";
+    const params = new URLSearchParams(window.location.search);
 
-window.EJS_startOnLoaded = true;
+    let selectedRom = params.get("rom");
 
-window.EJS_gameUrl =
-    params.get("rom") ||
-    "assets/roms/alifeprep.nes";
+    /* Default ROM */
+    if (!selectedRom) {
+        selectedRom = "assets/roms/alifeprep.nes";
+    }
 
-window.EJS_onGameStart = function ()
-{
-    // Espera un poco a que el audio esté inicializado
-    setTimeout(() =>
-    {
-        if (window.EJS_emulator)
-        {
-            // 0.0 = silencio
-            // 1.0 = volumen normal
-            window.EJS_emulator.setVolume(0.005); // 5%
+
+    /* =========================================================
+       2. EMULATORJS CONFIGURATION
+       IMPORTANT:
+       This MUST run BEFORE loader.js
+       ========================================================= */
+
+    window.EJS_player = "#game";
+
+    window.EJS_core = "nes";
+
+    window.EJS_pathtodata =
+        "https://cdn.emulatorjs.org/stable/data/";
+
+    window.EJS_gameUrl = selectedRom;
+
+    window.EJS_startOnLoaded = true;
+
+    window.EJS_language = "en-US";
+
+    window.EJS_backgroundColor = "#000000";
+
+
+    /* =========================================================
+       3. GAME START CALLBACK
+       ========================================================= */
+
+    window.EJS_onGameStart = function () {
+
+        console.log(
+            "[ALIFE26] NES game started:",
+            selectedRom
+        );
+
+        /*
+         * Wait until EmulatorJS has completely initialized.
+         */
+
+        setTimeout(function () {
+
+            try {
+
+                if (
+                    window.EJS_emulator &&
+                    typeof window.EJS_emulator.setVolume === "function"
+                ) {
+
+                    window.EJS_emulator.setVolume(0.05);
+
+                }
+
+            } catch (error) {
+
+                console.warn(
+                    "[ALIFE26] Could not change emulator volume:",
+                    error
+                );
+
+            }
+
+        }, 1000);
+
+    };
+
+
+    /* =========================================================
+       4. CLEAN ROM LOADER
+       ========================================================= */
+
+    function loadRom(romPath) {
+
+        if (!romPath) {
+            return;
         }
-    }, 500);
-};
 
-document.addEventListener("DOMContentLoaded", () =>
-{
-    document
-        .querySelectorAll(".game-cartridge")
-        .forEach(cartridge =>
-        {
-            cartridge.addEventListener("click", () =>
-            {
+
+        /*
+         * Do not reload the ROM already running.
+         */
+
+        if (romPath === selectedRom) {
+
+            console.log(
+                "[ALIFE26] ROM already loaded:",
+                romPath
+            );
+
+            return;
+        }
+
+
+        /*
+         * Stop background music before changing the game.
+         */
+
+        try {
+
+            const bgm =
+                document.getElementById("bgm");
+
+            if (bgm) {
+                bgm.pause();
+            }
+
+        } catch (error) {
+            console.warn(error);
+        }
+
+
+        /*
+         * Build a completely clean URL.
+         *
+         * We intentionally reload the WHOLE PAGE.
+         * This destroys the current EmulatorJS instance
+         * before creating the next one.
+         */
+
+        const nextURL =
+            new URL(window.location.href);
+
+        nextURL.search = "";
+
+        nextURL.searchParams.set(
+            "rom",
+            romPath
+        );
+
+
+        /*
+         * replace() avoids creating unnecessary
+         * browser-history entries.
+         */
+
+        window.location.replace(
+            nextURL.toString()
+        );
+
+    }
+
+
+    /* =========================================================
+       5. ROM DROPDOWN
+       ========================================================= */
+
+    const romSelector =
+        document.getElementById("romSelector");
+
+    const loadRomButton =
+        document.getElementById("loadRomButton");
+
+
+    if (romSelector) {
+
+        /*
+         * Show currently loaded ROM
+         */
+
+        const optionExists =
+            Array.from(romSelector.options)
+                .some(option =>
+                    option.value === selectedRom
+                );
+
+        if (optionExists) {
+            romSelector.value = selectedRom;
+        }
+
+
+        /*
+         * ENTER key loads selected ROM
+         */
+
+        romSelector.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (event.key === "Enter") {
+
+                    event.preventDefault();
+
+                    loadRom(
+                        romSelector.value
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    if (loadRomButton) {
+
+        loadRomButton.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+                if (!romSelector) {
+                    return;
+                }
+
                 const rom =
-                    cartridge.dataset.rom;
+                    romSelector.value;
 
-                window.location.href =
-                    "?rom=" +
-                    encodeURIComponent(rom);
-            });
-        });
+                if (!rom) {
+                    return;
+                }
+
+
+                /*
+                 * Play click sound if available.
+                 */
+
+                try {
+
+                    if (
+                        typeof sfxClick !== "undefined" &&
+                        sfxClick
+                    ) {
+
+                        sfxClick.currentTime = 0;
+
+                        sfxClick.play()
+                            .catch(() => {});
+
+                    }
+
+                } catch (error) {
+                    console.warn(error);
+                }
+
+
+                /*
+                 * Give the click sound a tiny moment
+                 * before navigation.
+                 */
+
+                setTimeout(function () {
+
+                    loadRom(rom);
+
+                }, 80);
+
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       6. CARTRIDGE BUTTONS
+       ========================================================= */
 
     document
         .querySelectorAll(".game-cartridge")
-        .forEach(cartridge =>
-        {
-            if (
-                cartridge.dataset.rom ===
-                window.EJS_gameUrl
-            )
-            {
+        .forEach(function (cartridge) {
+
+            const rom =
+                cartridge.dataset.rom;
+
+
+            /*
+             * Highlight current cartridge.
+             */
+
+            if (rom === selectedRom) {
+
                 cartridge.classList.add(
                     "selected-cartridge"
                 );
-            }
-        });
-});
 
+            } else {
+
+                cartridge.classList.remove(
+                    "selected-cartridge"
+                );
+
+            }
+
+
+            /*
+             * Cartridge click
+             */
+
+            cartridge.addEventListener(
+                "click",
+                function (event) {
+
+                    event.preventDefault();
+
+                    if (!rom) {
+                        return;
+                    }
+
+
+                    try {
+
+                        if (
+                            typeof sfxClick !== "undefined" &&
+                            sfxClick
+                        ) {
+
+                            sfxClick.currentTime = 0;
+
+                            sfxClick.play()
+                                .catch(() => {});
+
+                        }
+
+                    } catch (error) {
+                        console.warn(error);
+                    }
+
+
+                    setTimeout(function () {
+
+                        loadRom(rom);
+
+                    }, 80);
+
+                }
+            );
+
+        });
+
+
+    /* =========================================================
+       DEBUG
+       ========================================================= */
+
+    console.log(
+        "[ALIFE26] Loading NES ROM:",
+        selectedRom
+    );
+
+})();
 </script>
+
+
+<!-- ========================================================= -->
+<!-- LOAD EMULATORJS ONLY ONCE                                 -->
+<!-- ========================================================= -->
 
 <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
 
